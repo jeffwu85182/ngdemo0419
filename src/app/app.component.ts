@@ -23,7 +23,8 @@ export class AppComponent {
     this.todo = value;
   }
 
-  clearCompleted() {
-    this.todos = this.todos.filter(item => !item.done);
+  clearCompleted($event) {
+    console.log('clearCompleted ', $event);
+    this.todos = $event;
   }
 }
