@@ -1,7 +1,9 @@
 <section class="todoapp">
   <header class="header">
     <app-title></app-title>
-    <input class="new-todo" [placeholder]="inputHint" autofocus [attr.data-myhint]="inputHint">
+    <input class="new-todo" [placeholder]="inputHint"
+           autofocus [attr.data-myhint]="inputHint"
+           (keyup.enter)="addTodo($event.target)">
   </header>
   <!-- This section should be hidden by default and shown when there are todos -->
   <section class="main">
