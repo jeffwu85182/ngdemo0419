@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {Headers, Http, RequestOptions} from '@angular/http';
 
+import {DataService} from './data.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -9,40 +11,24 @@ import {Headers, Http, RequestOptions} from '@angular/http';
 export class AppComponent {
   inputHint = 'What needs to be done?!';
   col = 3;
-  todos:any[] = [];
-  // private _todos = [];
-  // set todos(value) {
-  //   this._todos = value;
-  //   this.updateTodos();
-  // };
-  // get todos() {
-  //   return this._todos;
-  // }
+  todos: any[] = [];
   todo: any;
   filterType = 'all';
   isSelectAll = false;
-  requestOptions: RequestOptions = new RequestOptions({
-    headers: new Headers(
-        {'Authorization': 'token 918ba598-d1e6-4810-9a2b-d9c502d5867c'})
-  });
 
-  constructor(private _http: Http) {
-    this._http.get('./me/demo0419', this.requestOptions).subscribe(rsp => {
+
+  constructor(private _http: Http, private _dataService: DataService) {
+    this._dataService.getTodos().subscribe(rsp => {
       this.todos = rsp.json();
+      this._dataService.todos = this.todos;
       this.checkToggle();
     });
-  }
-
-  updateTodos() {
-    this._http.post('./me/demo0419', this.todos, this.requestOptions)
-        .subscribe(rsp => console.log('更新完成！ ', rsp.json()));
   }
 
   addTodo($event: HTMLInputElement) {
     if ($event.value) {
       this.todos = [...this.todos, {value: this.todo, done: false}];
-      // this.todos.push({value: this.todo, done: false});
-      this.updateTodos();
+      this._dataService.todos = this.todos;
     }
     this.todo = '';
   }
@@ -54,7 +40,7 @@ export class AppComponent {
   clearCompleted($event) {
     console.log('clearCompleted ', $event);
     this.todos = $event;
-    this.updateTodos();
+    this._dataService.todos = this.todos;
   }
 
   switchType(ft: string) {
@@ -71,7 +57,7 @@ export class AppComponent {
         item.done = false;
       });
     }
-    this.updateTodos();
+    this._dataService.todos = this.todos;
   }
 
   checkToggle() {
@@ -85,13 +71,13 @@ export class AppComponent {
     // }
     this.isSelectAll = length > 0 ? false : true;
     this.todos = [...this.todos];
-    this.updateTodos();
+    this._dataService.todos = this.todos;
   }
 
   removeItem(item) {
     const index = this.todos.indexOf(item);
     this.todos.splice(index, 1);
     this.todos = [...this.todos];
-    this.updateTodos();
+    this._dataService.todos = this.todos;
   }
 }
