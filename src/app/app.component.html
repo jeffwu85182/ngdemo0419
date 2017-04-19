@@ -18,7 +18,7 @@
                    'text-decoration': item.done ? 'line-through' : ''}">
         <div class="view">
           <input class="toggle" type="checkbox" [(ngModel)]="item.done">
-          <label>{{item.value}}</label>
+          <label>{{item.value | uppercase}}</label>
           <button class="destroy"></button>
         </div>
         <input class="edit" value="Create a TodoMVC template">
