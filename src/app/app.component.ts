@@ -17,4 +17,8 @@ export class AppComponent {
     }
     this.todo = '';
   }
+
+  todoChange(value) {
+    this.todo = value;
+  }
 }

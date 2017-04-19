@@ -4,7 +4,7 @@
     <input class="new-todo" [placeholder]="inputHint"
            autofocus [attr.data-myhint]="inputHint"
            (keyup.enter)="addTodo($event.target)"
-           [(ngModel)]="todo">
+           [ngModel]="todo" (ngModelChange)="todoChange($event)">
   </header>
   <!-- This section should be hidden by default and shown when there are todos -->
   <section class="main">
