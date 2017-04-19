@@ -11,7 +11,9 @@ export class AppComponent {
   todos: any[] = [];
 
   addTodo($event: HTMLInputElement) {
-    this.todos.push($event.value);
+    if ($event.value) {
+      this.todos.push($event.value);
+    }
     $event.value = '';
   }
 }
