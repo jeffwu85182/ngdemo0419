@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {Http} from '@angular/http';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,9 @@ export class AppComponent {
   todos: any[] = [];
   todo: any;
   filterType = 'all';
+  isSelectAll = false;
+
+  constructor(private _http: Http) {}
 
   addTodo($event: HTMLInputElement) {
     if ($event.value) {
@@ -31,5 +35,35 @@ export class AppComponent {
 
   switchType(ft: string) {
     this.filterType = ft;
+  }
+
+  toggleAll() {
+    if (this.isSelectAll) {
+      this.todos.forEach(item => {
+        item.done = true;
+      });
+    } else {
+      this.todos.forEach(item => {
+        item.done = false;
+      });
+    }
+  }
+
+  checkToggle() {
+    console.log('checkToggle');
+    const length =
+        this.todos.filter(item => item.done === this.isSelectAll).length;
+    // if (length > 0) {
+    //   this.isSelectAll = false;
+    // } else {
+    //   this.isSelectAll = true;
+    // }
+    this.isSelectAll = length > 0 ? false : true;
+  }
+
+  removeItem(item) {
+    const index = this.todos.indexOf(item);
+    this.todos.splice(index, 1);
+    this.todos = [...this.todos];
   }
 }

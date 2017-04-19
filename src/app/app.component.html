@@ -8,7 +8,9 @@
   </header>
   <!-- This section should be hidden by default and shown when there are todos -->
   <section class="main" *ngIf="todos.length > 0">
-    <input class="toggle-all" type="checkbox">
+    <input class="toggle-all" type="checkbox"
+      [(ngModel)]="isSelectAll"
+      (ngModelChange)="toggleAll()">
     <label for="toggle-all">Mark all as complete</label>
     <ul class="todo-list">
       <!-- These are here just to show the structure of the list items -->
@@ -17,9 +19,11 @@
       [ngStyle]="{ 'color': item.done ? '#d9d9d9' : '',
                    'text-decoration': item.done ? 'line-through' : ''}">
         <div class="view">
-          <input class="toggle" type="checkbox" [(ngModel)]="item.done">
+          <input class="toggle" type="checkbox"
+                [(ngModel)]="item.done"
+                (ngModelChange)="checkToggle()">
           <label>{{item.value | uppercase}}</label>
-          <button class="destroy"></button>
+          <button class="destroy" (click)="removeItem(item)"></button>
         </div>
         <input class="edit" value="Create a TodoMVC template">
       </li>
