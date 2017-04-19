@@ -9,11 +9,12 @@ export class AppComponent {
   inputHint = 'What needs to be done?!';
   col = 3;
   todos: any[] = [];
+  todo: string;
 
   addTodo($event: HTMLInputElement) {
     if ($event.value) {
-      this.todos.push($event.value);
+      this.todos.push(this.todo);
     }
-    $event.value = '';
+    this.todo = '';
   }
 }
