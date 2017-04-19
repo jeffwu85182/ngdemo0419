@@ -7,7 +7,9 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angula
 })
 export class FooterComponent implements OnInit {
   private _todos: any[];
+  switchT: string;
   @Output() clearCompleted = new EventEmitter();
+  @Output() switchFilterType = new EventEmitter();
   @Input()
   set footerTodos(value) {
     console.log(value);
@@ -35,6 +37,11 @@ export class FooterComponent implements OnInit {
     console.log('clicked clear completed');
     this.footerTodos = this.footerTodos.filter(item => !item.done);
     this.clearCompleted.emit(this.footerTodos);
+  }
+
+  switchType(value) {
+    this.switchT = value;
+    this.switchFilterType.emit(value);
   }
 
   // ngOnChanges() {

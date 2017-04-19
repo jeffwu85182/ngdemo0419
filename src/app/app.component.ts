@@ -10,6 +10,7 @@ export class AppComponent {
   col = 3;
   todos: any[] = [];
   todo: any;
+  filterType = 'all';
 
   addTodo($event: HTMLInputElement) {
     if ($event.value) {
@@ -26,5 +27,9 @@ export class AppComponent {
   clearCompleted($event) {
     console.log('clearCompleted ', $event);
     this.todos = $event;
+  }
+
+  switchType(ft: string) {
+    this.filterType = ft;
   }
 }

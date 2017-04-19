@@ -13,7 +13,7 @@
     <ul class="todo-list">
       <!-- These are here just to show the structure of the list items -->
       <!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
-      <li *ngFor="let item of todos"
+      <li *ngFor="let item of todos | filter: filterType"
       [ngStyle]="{ 'color': item.done ? '#d9d9d9' : '',
                    'text-decoration': item.done ? 'line-through' : ''}">
         <div class="view">
@@ -26,7 +26,9 @@
     </ul>
   </section>
   <!-- This footer should hidden by default and shown when there are todos -->
-  <app-footer [footerTodos]="todos" (clearCompleted)="clearCompleted($event)"></app-footer>
+  <app-footer [footerTodos]="todos"
+              (clearCompleted)="clearCompleted($event)"
+              (switchFilterType)="switchType($event)"></app-footer>
 </section>
 <footer class="info">
   <p>Double-click to edit a todo</p>
