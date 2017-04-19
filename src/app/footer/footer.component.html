@@ -1,6 +1,9 @@
 <footer class="footer" *ngIf="footerTodos.length > 0">
   <!-- This should be `0 items left` by default -->
-  <span class="todo-count"><strong>{{footerTodos.length}}</strong> item left</span>
+  <span class="todo-count" [ngStyle]="{color: tooMany ? 'red' : '',
+                                       fontWeight: tooMany ? 'bold' : ''}">
+    <strong>{{footerTodos.length}}</strong> item left
+  </span>
   <!-- Remove this if you don't implement routing -->
   <ul class="filters">
     <li>
