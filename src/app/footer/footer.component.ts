@@ -6,7 +6,18 @@ import {Component, Input, OnChanges, OnInit} from '@angular/core';
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent implements OnInit, OnChanges {
-  @Input() footerTodos: any[];
+  private _todos: any[];
+
+  @Input()
+  set footerTodos(value) {
+    console.log(value);
+    this._todos = value;
+  }
+
+  get footerTodos() {
+    return this._todos;
+  }
+
   tooMany = false;
   constructor() {}
 
