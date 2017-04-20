@@ -15,14 +15,15 @@ export class AppComponent {
   todo: any;
   filterType = 'all';
   isSelectAll = false;
-
+  editMode = -1;
 
   constructor(private _http: Http, private _dataService: DataService) {
     this._dataService.getTodos().subscribe(rsp => {
       this.todos = rsp.json();
       this._dataService.todos = this.todos;
-      this.checkToggle();
+      this.checkToggle(true);
     });
+    this.todo = localStorage.getItem('tempTodo');
   }
 
   addTodo($event: HTMLInputElement) {
@@ -35,6 +36,7 @@ export class AppComponent {
 
   todoChange(value) {
     this.todo = value;
+    localStorage.setItem('tempTodo', value);
   }
 
   clearCompleted($event) {
@@ -60,18 +62,15 @@ export class AppComponent {
     this._dataService.todos = this.todos;
   }
 
-  checkToggle() {
+  checkToggle(firstTime?: boolean) {
     console.log('checkToggle');
     const length =
         this.todos.filter(item => item.done === this.isSelectAll).length;
-    // if (length > 0) {
-    //   this.isSelectAll = false;
-    // } else {
-    //   this.isSelectAll = true;
-    // }
     this.isSelectAll = length > 0 ? false : true;
     this.todos = [...this.todos];
-    this._dataService.todos = this.todos;
+    if (!firstTime) {
+      this._dataService.todos = this.todos;
+    }
   }
 
   removeItem(item) {
@@ -79,5 +78,12 @@ export class AppComponent {
     this.todos.splice(index, 1);
     this.todos = [...this.todos];
     this._dataService.todos = this.todos;
+  }
+
+  saveItem(target: HTMLInputElement, item) {
+    const index = this.todos.indexOf(item);
+    this.todos[index].value = target.value;
+    this._dataService.todos = this.todos;
+    this.editMode = -1;
   }
 }

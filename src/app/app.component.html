@@ -15,14 +15,19 @@
     <ul class="todo-list">
       <!-- These are here just to show the structure of the list items -->
       <!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
-      <li *ngFor="let item of todos | filter: filterType"
+      <li *ngFor="let item of todos | filter: filterType; let i=index;"
       [ngStyle]="{ 'color': item.done ? '#d9d9d9' : '',
                    'text-decoration': item.done ? 'line-through' : ''}">
         <div class="view">
           <input class="toggle" type="checkbox"
                 [(ngModel)]="item.done"
                 (ngModelChange)="checkToggle()">
-          <label>{{item.value | uppercase}}</label>
+          <label (dblclick)="editMode = i">
+            <span *ngIf="editMode === -1">{{item.value | uppercase}}</span>
+            <input type="text" [ngModel]="item.value" *ngIf="editMode === i"
+                   (keyup.enter)="saveItem($event.target, item)"
+                   (keyup.esc)="editMode = -1">
+          </label>
           <button class="destroy" (click)="removeItem(item)"></button>
         </div>
         <input class="edit" value="Create a TodoMVC template">
